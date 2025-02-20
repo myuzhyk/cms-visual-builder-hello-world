@@ -1,29 +1,27 @@
 import { CMSUrlProps } from "@helpers/cms/parsers";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { ExperienceTemplate } from "../../components/base/experience/experience.template";
+import { useMemo } from "react";
+import TemplateFactory from "@components/base/templates/template.factory";
+
+const getUrlFromParams = (slug: string | string[] | undefined) => {
+  if (!slug) return "/";
+  if (Array.isArray(slug)) {
+    return `/${slug.join("/")}/`;
+  }
+  return slug.startsWith("/") ? slug : `/${slug}/`;
+};
 
 export default function Home() {
-  const params = useParams();
-  const [urlProps, setUrlProps] = useState<CMSUrlProps>();
+  const { slug } = useParams() ?? {};
+  const url = useMemo(() => getUrlFromParams(slug), [slug]);
 
-  useEffect(() => {
-    let url = "/";
-    const slug = params?.slug;
-    if (slug) {
-      if (Array.isArray(slug)) {
-        url = `/${slug.join("/")}/`;
-      } else {
-        url = slug.startsWith("/") ? slug : `/${slug}/`;
-      }
-    }
-
-    setUrlProps({ url });
-  }, [params]);
-
-  if (!urlProps?.url) {
+  if (!url) {
     return <>Expected some URL data.</>;
   }
 
-  return <main className={`flex flex-col`}>{urlProps && <ExperienceTemplate {...urlProps} />}</main>;
+  return (
+    <main className={`flex flex-col`}>
+      <TemplateFactory url={url} />
+    </main>
+  );
 }

@@ -6,6 +6,7 @@ import { GlobalProvider, useGlobalContext } from "@context";
 import type { AppProps } from "next/app";
 import Script from "next/script";
 import { client } from "../client";
+import { useReportWebVitals } from "next/web-vitals";
 import "../styles/globals.css";
 
 const Main: React.FC<AppProps> = ({ Component, pageProps }) => {
@@ -21,10 +22,16 @@ const Main: React.FC<AppProps> = ({ Component, pageProps }) => {
 };
 
 export default function App(props: AppProps) {
+  useReportWebVitals((metric) => {
+    console.log(metric);
+  });
   return (
     <ApolloProvider client={client}>
       <GlobalProvider>
-        <Script src={client.communicationInjector} strategy="afterInteractive" />
+        <Script
+          src={client.communicationInjector}
+          strategy="afterInteractive"
+        />
         <Main {...props} />
       </GlobalProvider>
     </ApolloProvider>

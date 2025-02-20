@@ -1,8 +1,11 @@
 import { useQuery } from "@apollo/client";
-import { CompositionDisplaySetting, SectionNodeFragment } from "@generated/graphql";
+import {
+  CompositionDisplaySetting,
+  SectionNodeFragment,
+} from "@generated/graphql";
 import { useContentSaved } from "@hooks";
 import { useEffect, useMemo } from "react";
-import { SectionTemplate } from "../section/section.template";
+import { SectionTemplate } from "../../section/section.template";
 import { ExperienceQuery } from "./experience.graphql";
 import { GetExperienceStyles } from "./experience.style";
 import { useGlobalContext } from "@context";
@@ -15,9 +18,20 @@ interface ExperienceTemplateProps {
   url?: string | null; // Matched against the URL.Default
 }
 
-export const ExperienceTemplate: React.FC<ExperienceTemplateProps> = ({ contentGuid, version, locale, url }) => {
+export const ExperienceTemplate: React.FC<ExperienceTemplateProps> = ({
+  contentGuid,
+  version,
+  locale,
+  url,
+}) => {
   const { setIsLoading } = useGlobalContext();
-  const queryVariables = { key: contentGuid, version, locale, url, status: url ? "Published" : undefined };
+  const queryVariables = {
+    key: contentGuid,
+    version,
+    locale,
+    url,
+    status: url ? "Published" : undefined,
+  };
 
   const { data, refetch, error, loading } = useQuery(ExperienceQuery, {
     variables: queryVariables,
@@ -27,7 +41,11 @@ export const ExperienceTemplate: React.FC<ExperienceTemplateProps> = ({ contentG
       // refetch(queryVariables);
     },
     onCompleted: (data) => {
-      console.log("[QUERY] Query finished with variables", queryVariables, data);
+      console.log(
+        "[QUERY] Query finished with variables",
+        queryVariables,
+        data
+      );
       setIsLoading(false);
     },
   });
@@ -56,10 +74,15 @@ export const ExperienceTemplate: React.FC<ExperienceTemplateProps> = ({ contentG
     }
   }, [loading]);
 
-  const sections = useMemo(() => experience?.composition?.sections ?? [], [experience]);
+  const sections = useMemo(
+    () => experience?.composition?.sections ?? [],
+    [experience]
+  );
 
   const classes = useMemo(() => {
-    return GetExperienceStyles(experience?.composition?.displaySettings as CompositionDisplaySetting[]);
+    return GetExperienceStyles(
+      experience?.composition?.displaySettings as CompositionDisplaySetting[]
+    );
   }, [experience]);
 
   if (error) {
@@ -72,7 +95,15 @@ export const ExperienceTemplate: React.FC<ExperienceTemplateProps> = ({ contentG
 
   return (
     <article className={classes}>
-      {sections.map((section) => section && <SectionTemplate section={section as SectionNodeFragment} key={section.key} />)}
+      {sections.map(
+        (section) =>
+          section && (
+            <SectionTemplate
+              section={section as SectionNodeFragment}
+              key={section.key}
+            />
+          )
+      )}
     </article>
   );
 };

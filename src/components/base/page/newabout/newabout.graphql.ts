@@ -1,14 +1,14 @@
 import { graphql } from "@generated/graphql/gql";
 
-export const JustPageQuery = graphql(/* GraphQL */ `
-  query GetJustPage(
+export const NewAboutQuery = graphql(/* GraphQL */ `
+  query GetNewAboutPage(
     $key: String
     $version: String
     $locale: String
     $url: String
     $status: String
   ) {
-    content: JustPage(
+    content: BlankPage(
       where: {
         _metadata: {
           url: { default: { eq: $url } }
@@ -20,22 +20,20 @@ export const JustPageQuery = graphql(/* GraphQL */ `
       }
     ) {
       items {
+        Title
         Block {
-          Text {
-            json
-          }
+          Heading
         }
       }
     }
   }
 `);
 
-export const JustPageFragment = graphql(/* GraphQL */ `
-  fragment JustPageFragment on JustPage {
+export const NewAboutDataFragment = graphql(/* GraphQL */ `
+  fragment NewAboutData on BlankPage {
+    Title
     Block {
-      Text {
-        json
-      }
+      Heading
     }
   }
 `);

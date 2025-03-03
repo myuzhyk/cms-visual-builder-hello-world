@@ -1,14 +1,14 @@
 import { graphql } from "@generated/graphql/gql";
 
-export const JustPageQuery = graphql(/* GraphQL */ `
-  query GetJustPage(
+export const Page2Query = graphql(/* GraphQL */ `
+  query GetPage2Page(
     $key: String
     $version: String
     $locale: String
     $url: String
     $status: String
   ) {
-    content: JustPage(
+    content: Page2(
       where: {
         _metadata: {
           url: { default: { eq: $url } }
@@ -25,16 +25,6 @@ export const JustPageQuery = graphql(/* GraphQL */ `
             json
           }
         }
-      }
-    }
-  }
-`);
-
-export const JustPageFragment = graphql(/* GraphQL */ `
-  fragment JustPageFragment on JustPage {
-    Block {
-      Text {
-        json
       }
     }
   }

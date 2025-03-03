@@ -1,14 +1,14 @@
 import { graphql } from "@generated/graphql/gql";
 
-export const NewAboutQuery = graphql(/* GraphQL */ `
-  query GetNewAboutPage(
+export const Page3Query = graphql(/* GraphQL */ `
+  query GetPage3Page(
     $key: String
     $version: String
     $locale: String
     $url: String
     $status: String
   ) {
-    content: BlankPage(
+    content: Page3(
       where: {
         _metadata: {
           url: { default: { eq: $url } }
@@ -20,9 +20,10 @@ export const NewAboutQuery = graphql(/* GraphQL */ `
       }
     ) {
       items {
-        Title
         Block {
-          Heading
+          Text {
+            json
+          }
         }
       }
     }

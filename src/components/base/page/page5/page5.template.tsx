@@ -1,10 +1,11 @@
 import { useQuery } from "@apollo/client";
 import { useGlobalContext } from "@context";
-import { NewAboutQuery } from "./newabout.graphql";
+import { Page5Query } from "./page5.graphql";
 import { ElementTemplate } from "@components/base/element/element.template";
-import { ElementNodeFragment, NewAboutDataFragment } from "@generated/graphql";
+import { ElementNodeFragment, Page5DataFragment } from "@generated/graphql";
+import { extractText } from "../justpage/justpage.template";
 
-export interface NewAboutTemplateProps {
+export interface Page5TemplateProps {
   contentGuid?: string | null; // Content GUID
   version?: string | null; // Optional version
   locale?: string | null; // Optional locale
@@ -12,13 +13,13 @@ export interface NewAboutTemplateProps {
   url?: string | null; // Matched against the URL.Default
 }
 
-export const NewAboutTemplate: React.FC<NewAboutTemplateProps> = ({
+export const Page5Template: React.FC<Page5TemplateProps> = ({
   url,
   contentGuid,
 }) => {
   const { setIsLoading } = useGlobalContext();
 
-  const { data, refetch, error, loading } = useQuery(NewAboutQuery, {
+  const { data, refetch, error, loading } = useQuery(Page5Query, {
     variables: { url, key: contentGuid },
     notifyOnNetworkStatusChange: true,
     onError: (error) => {
@@ -31,17 +32,15 @@ export const NewAboutTemplate: React.FC<NewAboutTemplateProps> = ({
     },
   });
 
-  const contentItem = data?.content?.items?.[0] as NewAboutDataFragment;
+  const contentItem = data?.content?.items?.[0] as Page5DataFragment;
 
-  const title = contentItem?.Title || "No Title";
-  const heading = contentItem?.Block?.Heading || "No Heading";
+  const paragraph = extractText(contentItem?.Block?.Text?.json) || "";
 
   return (
     <article className="relative experience theme--blue">
       <section className="opti-container outer-padding padding-top--medium padding-bottom--medium">
         <div className="opti-container__content container-narrow">
-          <h1 className="text-red">{title}</h1>
-          <h2>{heading}</h2>
+          <p>{paragraph}</p>
         </div>
       </section>
     </article>

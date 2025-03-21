@@ -14,7 +14,7 @@ const ParagraphElementComponent = (props: {
 }) => {
     const paragraphElement = useFragment(ParagraphElementFragment, props.paragraphElement)
     // @ts-ignore
-    return <div dangerouslySetInnerHTML={{ __html: paragraphElement.Text?.html }}></div>
+    return <div className='bg-green' dangerouslySetInnerHTML={{ __html: paragraphElement.Text?.html }}></div>
 }
 
 export default ParagraphElementComponent

@@ -23,6 +23,7 @@ export type Scalars = {
 
 export type BlankExperience = IData & _IContent & _IExperience & _IPage & {
   __typename?: 'BlankExperience';
+  BlankExperienceSeoSettings?: Maybe<PageSeoSettingsProperty>;
   /** @deprecated Use `_link` field instead */
   _children?: Maybe<QueryRef>;
   _deleted?: Maybe<Scalars['Bool']['output']>;
@@ -47,17 +48,20 @@ export type BlankExperience_LinkArgs = {
 
 export type BlankExperienceAutocomplete = {
   __typename?: 'BlankExperienceAutocomplete';
+  BlankExperienceSeoSettings?: Maybe<PageSeoSettingsPropertyAutocomplete>;
   _metadata?: Maybe<IContentMetadataAutocomplete>;
   composition?: Maybe<CompositionStructureNodeAutocomplete>;
 };
 
 export type BlankExperienceFacet = {
   __typename?: 'BlankExperienceFacet';
+  BlankExperienceSeoSettings?: Maybe<PageSeoSettingsPropertyFacet>;
   _metadata?: Maybe<IContentMetadataFacet>;
   composition?: Maybe<CompositionStructureNodeFacet>;
 };
 
 export type BlankExperienceOrderByInput = {
+  BlankExperienceSeoSettings?: InputMaybe<PageSeoSettingsPropertyOrderByInput>;
   _metadata?: InputMaybe<IContentMetadataOrderByInput>;
   _minimumScore?: InputMaybe<Scalars['Float']['input']>;
   _modified?: InputMaybe<OrderBy>;
@@ -72,6 +76,7 @@ export type BlankExperienceOutput = {
   autocomplete?: Maybe<BlankExperienceAutocomplete>;
   cursor?: Maybe<Scalars['String']['output']>;
   facets?: Maybe<BlankExperienceFacet>;
+  item?: Maybe<BlankExperience>;
   items?: Maybe<Array<Maybe<BlankExperience>>>;
   total?: Maybe<Scalars['Int']['output']>;
 };
@@ -82,6 +87,7 @@ export type BlankExperienceOutputTotalArgs = {
 };
 
 export type BlankExperienceWhereInput = {
+  BlankExperienceSeoSettings?: InputMaybe<PageSeoSettingsPropertyWhereInput>;
   _and?: InputMaybe<Array<InputMaybe<BlankExperienceWhereInput>>>;
   _fulltext?: InputMaybe<SearchableStringFilterInput>;
   _metadata?: InputMaybe<IContentMetadataWhereInput>;
@@ -142,6 +148,7 @@ export type BlankSectionOutput = {
   autocomplete?: Maybe<BlankSectionAutocomplete>;
   cursor?: Maybe<Scalars['String']['output']>;
   facets?: Maybe<BlankSectionFacet>;
+  item?: Maybe<BlankSection>;
   items?: Maybe<Array<Maybe<BlankSection>>>;
   total?: Maybe<Scalars['Int']['output']>;
 };
@@ -382,10 +389,53 @@ export type ContentMetadataDisplayNameArgs = {
   highlight?: InputMaybe<HighlightOptions>;
 };
 
+export type ContentReference = {
+  __typename?: 'ContentReference';
+  key?: Maybe<Scalars['String']['output']>;
+  url?: Maybe<ContentUrl>;
+};
+
+export type ContentReferenceAutocomplete = {
+  __typename?: 'ContentReferenceAutocomplete';
+  key?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  url?: Maybe<ContentUrlAutocomplete>;
+};
+
+
+export type ContentReferenceAutocompleteKeyArgs = {
+  limit?: Scalars['Int']['input'];
+  value: Scalars['String']['input'];
+};
+
+export type ContentReferenceFacet = {
+  __typename?: 'ContentReferenceFacet';
+  key?: Maybe<Array<Maybe<StringFacet>>>;
+  url?: Maybe<ContentUrlFacet>;
+};
+
+
+export type ContentReferenceFacetKeyArgs = {
+  filters?: InputMaybe<Array<Scalars['String']['input']>>;
+  limit?: Scalars['Int']['input'];
+  orderBy?: InputMaybe<OrderBy>;
+  orderType?: InputMaybe<OrderByFacetType>;
+};
+
+export type ContentReferenceOrderByInput = {
+  key?: InputMaybe<OrderBy>;
+  url?: InputMaybe<ContentUrlOrderByInput>;
+};
+
+export type ContentReferenceWhereInput = {
+  key?: InputMaybe<StringFilterInput>;
+  url?: InputMaybe<ContentUrlWhereInput>;
+};
+
 export type ContentUrl = {
   __typename?: 'ContentUrl';
   base?: Maybe<Scalars['String']['output']>;
   default?: Maybe<Scalars['String']['output']>;
+  graph?: Maybe<Scalars['String']['output']>;
   hierarchical?: Maybe<Scalars['String']['output']>;
   internal?: Maybe<Scalars['String']['output']>;
   type?: Maybe<Scalars['String']['output']>;
@@ -395,6 +445,7 @@ export type ContentUrlAutocomplete = {
   __typename?: 'ContentUrlAutocomplete';
   base?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   default?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  graph?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   hierarchical?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   internal?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   type?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
@@ -408,6 +459,12 @@ export type ContentUrlAutocompleteBaseArgs = {
 
 
 export type ContentUrlAutocompleteDefaultArgs = {
+  limit?: Scalars['Int']['input'];
+  value: Scalars['String']['input'];
+};
+
+
+export type ContentUrlAutocompleteGraphArgs = {
   limit?: Scalars['Int']['input'];
   value: Scalars['String']['input'];
 };
@@ -434,6 +491,7 @@ export type ContentUrlFacet = {
   __typename?: 'ContentUrlFacet';
   base?: Maybe<Array<Maybe<StringFacet>>>;
   default?: Maybe<Array<Maybe<StringFacet>>>;
+  graph?: Maybe<Array<Maybe<StringFacet>>>;
   hierarchical?: Maybe<Array<Maybe<StringFacet>>>;
   internal?: Maybe<Array<Maybe<StringFacet>>>;
   type?: Maybe<Array<Maybe<StringFacet>>>;
@@ -449,6 +507,14 @@ export type ContentUrlFacetBaseArgs = {
 
 
 export type ContentUrlFacetDefaultArgs = {
+  filters?: InputMaybe<Array<Scalars['String']['input']>>;
+  limit?: Scalars['Int']['input'];
+  orderBy?: InputMaybe<OrderBy>;
+  orderType?: InputMaybe<OrderByFacetType>;
+};
+
+
+export type ContentUrlFacetGraphArgs = {
   filters?: InputMaybe<Array<Scalars['String']['input']>>;
   limit?: Scalars['Int']['input'];
   orderBy?: InputMaybe<OrderBy>;
@@ -482,6 +548,7 @@ export type ContentUrlFacetTypeArgs = {
 export type ContentUrlOrderByInput = {
   base?: InputMaybe<OrderBy>;
   default?: InputMaybe<OrderBy>;
+  graph?: InputMaybe<OrderBy>;
   hierarchical?: InputMaybe<OrderBy>;
   internal?: InputMaybe<OrderBy>;
   type?: InputMaybe<OrderBy>;
@@ -490,6 +557,7 @@ export type ContentUrlOrderByInput = {
 export type ContentUrlWhereInput = {
   base?: InputMaybe<StringFilterInput>;
   default?: InputMaybe<StringFilterInput>;
+  graph?: InputMaybe<StringFilterInput>;
   hierarchical?: InputMaybe<StringFilterInput>;
   internal?: InputMaybe<StringFilterInput>;
   type?: InputMaybe<StringFilterInput>;
@@ -528,6 +596,7 @@ export type DataOrderByInput = {
 export type DataOutput = {
   __typename?: 'DataOutput';
   cursor?: Maybe<Scalars['String']['output']>;
+  item?: Maybe<IData>;
   items?: Maybe<Array<Maybe<IData>>>;
   total?: Maybe<Scalars['Int']['output']>;
 };
@@ -586,71 +655,6 @@ export type Decay = {
   origin?: InputMaybe<Scalars['Date']['input']>;
   rate?: InputMaybe<Scalars['Float']['input']>;
   scale?: InputMaybe<Scalars['Int']['input']>;
-};
-
-export type GenericMedia = IData & _IContent & _IMedia & {
-  __typename?: 'GenericMedia';
-  /** @deprecated Use `_link` field instead */
-  _children?: Maybe<QueryRef>;
-  _deleted?: Maybe<Scalars['Bool']['output']>;
-  _fulltext?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
-  _id?: Maybe<Scalars['String']['output']>;
-  _link?: Maybe<QueryRef>;
-  _metadata?: Maybe<IContentMetadata>;
-  _modified?: Maybe<Scalars['Date']['output']>;
-  _score?: Maybe<Scalars['Float']['output']>;
-};
-
-
-export type GenericMedia_FulltextArgs = {
-  highlight?: InputMaybe<HighlightOptions>;
-};
-
-
-export type GenericMedia_LinkArgs = {
-  type?: InputMaybe<LinkTypes>;
-};
-
-export type GenericMediaAutocomplete = {
-  __typename?: 'GenericMediaAutocomplete';
-  _metadata?: Maybe<IContentMetadataAutocomplete>;
-};
-
-export type GenericMediaFacet = {
-  __typename?: 'GenericMediaFacet';
-  _metadata?: Maybe<IContentMetadataFacet>;
-};
-
-export type GenericMediaOrderByInput = {
-  _metadata?: InputMaybe<IContentMetadataOrderByInput>;
-  _minimumScore?: InputMaybe<Scalars['Float']['input']>;
-  _modified?: InputMaybe<OrderBy>;
-  _ranking?: InputMaybe<Ranking>;
-  /** The value needs to be a positive value, but cannot exceed the maximum value of an integer. In case it is exceeded, the maximum of an integer is used. In case of a negative value, semantic search will be disabled. */
-  _semanticWeight?: InputMaybe<Scalars['Float']['input']>;
-};
-
-export type GenericMediaOutput = {
-  __typename?: 'GenericMediaOutput';
-  autocomplete?: Maybe<GenericMediaAutocomplete>;
-  cursor?: Maybe<Scalars['String']['output']>;
-  facets?: Maybe<GenericMediaFacet>;
-  items?: Maybe<Array<Maybe<GenericMedia>>>;
-  total?: Maybe<Scalars['Int']['output']>;
-};
-
-
-export type GenericMediaOutputTotalArgs = {
-  all?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export type GenericMediaWhereInput = {
-  _and?: InputMaybe<Array<InputMaybe<GenericMediaWhereInput>>>;
-  _fulltext?: InputMaybe<SearchableStringFilterInput>;
-  _metadata?: InputMaybe<IContentMetadataWhereInput>;
-  _modified?: InputMaybe<DateFilterInput>;
-  _not?: InputMaybe<Array<InputMaybe<GenericMediaWhereInput>>>;
-  _or?: InputMaybe<Array<InputMaybe<GenericMediaWhereInput>>>;
 };
 
 /** Options for highlighting */
@@ -1107,6 +1111,7 @@ export type IMediaMetadataDisplayNameArgs = {
 
 export type ImageMedia = IData & _IContent & _IImage & _IMedia & {
   __typename?: 'ImageMedia';
+  AltText?: Maybe<Scalars['String']['output']>;
   /** @deprecated Use `_link` field instead */
   _children?: Maybe<QueryRef>;
   _deleted?: Maybe<Scalars['Bool']['output']>;
@@ -1152,6 +1157,7 @@ export type ImageMediaOutput = {
   autocomplete?: Maybe<ImageMediaAutocomplete>;
   cursor?: Maybe<Scalars['String']['output']>;
   facets?: Maybe<ImageMediaFacet>;
+  item?: Maybe<ImageMedia>;
   items?: Maybe<Array<Maybe<ImageMedia>>>;
   total?: Maybe<Scalars['Int']['output']>;
 };
@@ -1314,6 +1320,236 @@ export enum OrderByFacetType {
   Value = 'VALUE'
 }
 
+export type PageSeoSettings = IData & _IComponent & _IContent & {
+  __typename?: 'PageSeoSettings';
+  GraphType?: Maybe<Scalars['String']['output']>;
+  MetaDescription?: Maybe<Scalars['String']['output']>;
+  MetaKeywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  MetaTitle?: Maybe<Scalars['String']['output']>;
+  SharingImage?: Maybe<ContentReference>;
+  /** @deprecated Use `_link` field instead */
+  _children?: Maybe<QueryRef>;
+  _deleted?: Maybe<Scalars['Bool']['output']>;
+  _fulltext?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  _id?: Maybe<Scalars['String']['output']>;
+  _link?: Maybe<QueryRef>;
+  _metadata?: Maybe<IContentMetadata>;
+  _modified?: Maybe<Scalars['Date']['output']>;
+  _score?: Maybe<Scalars['Float']['output']>;
+};
+
+
+export type PageSeoSettingsGraphTypeArgs = {
+  highlight?: InputMaybe<HighlightOptions>;
+};
+
+
+export type PageSeoSettingsMetaDescriptionArgs = {
+  highlight?: InputMaybe<HighlightOptions>;
+};
+
+
+export type PageSeoSettingsMetaKeywordsArgs = {
+  highlight?: InputMaybe<HighlightOptions>;
+};
+
+
+export type PageSeoSettingsMetaTitleArgs = {
+  highlight?: InputMaybe<HighlightOptions>;
+};
+
+
+export type PageSeoSettings_FulltextArgs = {
+  highlight?: InputMaybe<HighlightOptions>;
+};
+
+
+export type PageSeoSettings_LinkArgs = {
+  type?: InputMaybe<LinkTypes>;
+};
+
+export type PageSeoSettingsAutocomplete = {
+  __typename?: 'PageSeoSettingsAutocomplete';
+  SharingImage?: Maybe<ContentReferenceAutocomplete>;
+  _metadata?: Maybe<IContentMetadataAutocomplete>;
+};
+
+export type PageSeoSettingsFacet = {
+  __typename?: 'PageSeoSettingsFacet';
+  GraphType?: Maybe<Array<Maybe<StringFacet>>>;
+  MetaDescription?: Maybe<Array<Maybe<StringFacet>>>;
+  MetaKeywords?: Maybe<Array<Maybe<StringFacet>>>;
+  MetaTitle?: Maybe<Array<Maybe<StringFacet>>>;
+  SharingImage?: Maybe<ContentReferenceFacet>;
+  _metadata?: Maybe<IContentMetadataFacet>;
+};
+
+
+export type PageSeoSettingsFacetGraphTypeArgs = {
+  filters?: InputMaybe<Array<Scalars['String']['input']>>;
+  limit?: Scalars['Int']['input'];
+  orderBy?: InputMaybe<OrderBy>;
+  orderType?: InputMaybe<OrderByFacetType>;
+};
+
+
+export type PageSeoSettingsFacetMetaDescriptionArgs = {
+  filters?: InputMaybe<Array<Scalars['String']['input']>>;
+  limit?: Scalars['Int']['input'];
+  orderBy?: InputMaybe<OrderBy>;
+  orderType?: InputMaybe<OrderByFacetType>;
+};
+
+
+export type PageSeoSettingsFacetMetaKeywordsArgs = {
+  filters?: InputMaybe<Array<Scalars['String']['input']>>;
+  limit?: Scalars['Int']['input'];
+  orderBy?: InputMaybe<OrderBy>;
+  orderType?: InputMaybe<OrderByFacetType>;
+};
+
+
+export type PageSeoSettingsFacetMetaTitleArgs = {
+  filters?: InputMaybe<Array<Scalars['String']['input']>>;
+  limit?: Scalars['Int']['input'];
+  orderBy?: InputMaybe<OrderBy>;
+  orderType?: InputMaybe<OrderByFacetType>;
+};
+
+export type PageSeoSettingsOrderByInput = {
+  GraphType?: InputMaybe<OrderBy>;
+  MetaDescription?: InputMaybe<OrderBy>;
+  MetaKeywords?: InputMaybe<OrderBy>;
+  MetaTitle?: InputMaybe<OrderBy>;
+  SharingImage?: InputMaybe<ContentReferenceOrderByInput>;
+  _metadata?: InputMaybe<IContentMetadataOrderByInput>;
+  _minimumScore?: InputMaybe<Scalars['Float']['input']>;
+  _modified?: InputMaybe<OrderBy>;
+  _ranking?: InputMaybe<Ranking>;
+  /** The value needs to be a positive value, but cannot exceed the maximum value of an integer. In case it is exceeded, the maximum of an integer is used. In case of a negative value, semantic search will be disabled. */
+  _semanticWeight?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type PageSeoSettingsOutput = {
+  __typename?: 'PageSeoSettingsOutput';
+  autocomplete?: Maybe<PageSeoSettingsAutocomplete>;
+  cursor?: Maybe<Scalars['String']['output']>;
+  facets?: Maybe<PageSeoSettingsFacet>;
+  item?: Maybe<PageSeoSettings>;
+  items?: Maybe<Array<Maybe<PageSeoSettings>>>;
+  total?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type PageSeoSettingsOutputTotalArgs = {
+  all?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type PageSeoSettingsProperty = {
+  __typename?: 'PageSeoSettingsProperty';
+  GraphType?: Maybe<Scalars['String']['output']>;
+  MetaDescription?: Maybe<Scalars['String']['output']>;
+  MetaKeywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  MetaTitle?: Maybe<Scalars['String']['output']>;
+  SharingImage?: Maybe<ContentReference>;
+};
+
+
+export type PageSeoSettingsPropertyGraphTypeArgs = {
+  highlight?: InputMaybe<HighlightOptions>;
+};
+
+
+export type PageSeoSettingsPropertyMetaDescriptionArgs = {
+  highlight?: InputMaybe<HighlightOptions>;
+};
+
+
+export type PageSeoSettingsPropertyMetaKeywordsArgs = {
+  highlight?: InputMaybe<HighlightOptions>;
+};
+
+
+export type PageSeoSettingsPropertyMetaTitleArgs = {
+  highlight?: InputMaybe<HighlightOptions>;
+};
+
+export type PageSeoSettingsPropertyAutocomplete = {
+  __typename?: 'PageSeoSettingsPropertyAutocomplete';
+  SharingImage?: Maybe<ContentReferenceAutocomplete>;
+};
+
+export type PageSeoSettingsPropertyFacet = {
+  __typename?: 'PageSeoSettingsPropertyFacet';
+  GraphType?: Maybe<Array<Maybe<StringFacet>>>;
+  MetaDescription?: Maybe<Array<Maybe<StringFacet>>>;
+  MetaKeywords?: Maybe<Array<Maybe<StringFacet>>>;
+  MetaTitle?: Maybe<Array<Maybe<StringFacet>>>;
+  SharingImage?: Maybe<ContentReferenceFacet>;
+};
+
+
+export type PageSeoSettingsPropertyFacetGraphTypeArgs = {
+  filters?: InputMaybe<Array<Scalars['String']['input']>>;
+  limit?: Scalars['Int']['input'];
+  orderBy?: InputMaybe<OrderBy>;
+  orderType?: InputMaybe<OrderByFacetType>;
+};
+
+
+export type PageSeoSettingsPropertyFacetMetaDescriptionArgs = {
+  filters?: InputMaybe<Array<Scalars['String']['input']>>;
+  limit?: Scalars['Int']['input'];
+  orderBy?: InputMaybe<OrderBy>;
+  orderType?: InputMaybe<OrderByFacetType>;
+};
+
+
+export type PageSeoSettingsPropertyFacetMetaKeywordsArgs = {
+  filters?: InputMaybe<Array<Scalars['String']['input']>>;
+  limit?: Scalars['Int']['input'];
+  orderBy?: InputMaybe<OrderBy>;
+  orderType?: InputMaybe<OrderByFacetType>;
+};
+
+
+export type PageSeoSettingsPropertyFacetMetaTitleArgs = {
+  filters?: InputMaybe<Array<Scalars['String']['input']>>;
+  limit?: Scalars['Int']['input'];
+  orderBy?: InputMaybe<OrderBy>;
+  orderType?: InputMaybe<OrderByFacetType>;
+};
+
+export type PageSeoSettingsPropertyOrderByInput = {
+  GraphType?: InputMaybe<OrderBy>;
+  MetaDescription?: InputMaybe<OrderBy>;
+  MetaKeywords?: InputMaybe<OrderBy>;
+  MetaTitle?: InputMaybe<OrderBy>;
+  SharingImage?: InputMaybe<ContentReferenceOrderByInput>;
+};
+
+export type PageSeoSettingsPropertyWhereInput = {
+  GraphType?: InputMaybe<SearchableStringFilterInput>;
+  MetaDescription?: InputMaybe<SearchableStringFilterInput>;
+  MetaKeywords?: InputMaybe<SearchableStringFilterInput>;
+  MetaTitle?: InputMaybe<SearchableStringFilterInput>;
+  SharingImage?: InputMaybe<ContentReferenceWhereInput>;
+};
+
+export type PageSeoSettingsWhereInput = {
+  GraphType?: InputMaybe<SearchableStringFilterInput>;
+  MetaDescription?: InputMaybe<SearchableStringFilterInput>;
+  MetaKeywords?: InputMaybe<SearchableStringFilterInput>;
+  MetaTitle?: InputMaybe<SearchableStringFilterInput>;
+  SharingImage?: InputMaybe<ContentReferenceWhereInput>;
+  _and?: InputMaybe<Array<InputMaybe<PageSeoSettingsWhereInput>>>;
+  _fulltext?: InputMaybe<SearchableStringFilterInput>;
+  _metadata?: InputMaybe<IContentMetadataWhereInput>;
+  _modified?: InputMaybe<DateFilterInput>;
+  _not?: InputMaybe<Array<InputMaybe<PageSeoSettingsWhereInput>>>;
+  _or?: InputMaybe<Array<InputMaybe<PageSeoSettingsWhereInput>>>;
+};
+
 export type ParagraphElement = IData & _IComponent & _IContent & {
   __typename?: 'ParagraphElement';
   Text?: Maybe<RichText>;
@@ -1365,6 +1601,7 @@ export type ParagraphElementOutput = {
   autocomplete?: Maybe<ParagraphElementAutocomplete>;
   cursor?: Maybe<Scalars['String']['output']>;
   facets?: Maybe<ParagraphElementFacet>;
+  item?: Maybe<ParagraphElement>;
   items?: Maybe<Array<Maybe<ParagraphElement>>>;
   total?: Maybe<Scalars['Int']['output']>;
 };
@@ -1389,8 +1626,8 @@ export type Query = {
   BlankExperience?: Maybe<BlankExperienceOutput>;
   BlankSection?: Maybe<BlankSectionOutput>;
   Data?: Maybe<DataOutput>;
-  GenericMedia?: Maybe<GenericMediaOutput>;
   ImageMedia?: Maybe<ImageMediaOutput>;
+  PageSeoSettings?: Maybe<PageSeoSettingsOutput>;
   ParagraphElement?: Maybe<ParagraphElementOutput>;
   SysContentFolder?: Maybe<SysContentFolderOutput>;
   VideoMedia?: Maybe<VideoMediaOutput>;
@@ -1439,17 +1676,6 @@ export type QueryDataArgs = {
 };
 
 
-export type QueryGenericMediaArgs = {
-  cursor?: InputMaybe<Scalars['String']['input']>;
-  ids?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  limit?: Scalars['Int']['input'];
-  locale?: InputMaybe<Array<InputMaybe<Locales>>>;
-  orderBy?: InputMaybe<GenericMediaOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  where?: InputMaybe<GenericMediaWhereInput>;
-};
-
-
 export type QueryImageMediaArgs = {
   cursor?: InputMaybe<Scalars['String']['input']>;
   ids?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
@@ -1458,6 +1684,17 @@ export type QueryImageMediaArgs = {
   orderBy?: InputMaybe<ImageMediaOrderByInput>;
   skip?: Scalars['Int']['input'];
   where?: InputMaybe<ImageMediaWhereInput>;
+};
+
+
+export type QueryPageSeoSettingsArgs = {
+  cursor?: InputMaybe<Scalars['String']['input']>;
+  ids?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  limit?: Scalars['Int']['input'];
+  locale?: InputMaybe<Array<InputMaybe<Locales>>>;
+  orderBy?: InputMaybe<PageSeoSettingsOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  where?: InputMaybe<PageSeoSettingsWhereInput>;
 };
 
 
@@ -1597,8 +1834,8 @@ export type QueryRef = {
   BlankExperience?: Maybe<BlankExperienceOutput>;
   BlankSection?: Maybe<BlankSectionOutput>;
   Data?: Maybe<DataOutput>;
-  GenericMedia?: Maybe<GenericMediaOutput>;
   ImageMedia?: Maybe<ImageMediaOutput>;
+  PageSeoSettings?: Maybe<PageSeoSettingsOutput>;
   ParagraphElement?: Maybe<ParagraphElementOutput>;
   SysContentFolder?: Maybe<SysContentFolderOutput>;
   VideoMedia?: Maybe<VideoMediaOutput>;
@@ -1647,17 +1884,6 @@ export type QueryRefDataArgs = {
 };
 
 
-export type QueryRefGenericMediaArgs = {
-  cursor?: InputMaybe<Scalars['String']['input']>;
-  ids?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  limit?: Scalars['Int']['input'];
-  locale?: InputMaybe<Array<InputMaybe<Locales>>>;
-  orderBy?: InputMaybe<GenericMediaOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  where?: InputMaybe<GenericMediaWhereInput>;
-};
-
-
 export type QueryRefImageMediaArgs = {
   cursor?: InputMaybe<Scalars['String']['input']>;
   ids?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
@@ -1666,6 +1892,17 @@ export type QueryRefImageMediaArgs = {
   orderBy?: InputMaybe<ImageMediaOrderByInput>;
   skip?: Scalars['Int']['input'];
   where?: InputMaybe<ImageMediaWhereInput>;
+};
+
+
+export type QueryRefPageSeoSettingsArgs = {
+  cursor?: InputMaybe<Scalars['String']['input']>;
+  ids?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  limit?: Scalars['Int']['input'];
+  locale?: InputMaybe<Array<InputMaybe<Locales>>>;
+  orderBy?: InputMaybe<PageSeoSettingsOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  where?: InputMaybe<PageSeoSettingsWhereInput>;
 };
 
 
@@ -1957,6 +2194,7 @@ export type SysContentFolderOutput = {
   autocomplete?: Maybe<SysContentFolderAutocomplete>;
   cursor?: Maybe<Scalars['String']['output']>;
   facets?: Maybe<SysContentFolderFacet>;
+  item?: Maybe<SysContentFolder>;
   items?: Maybe<Array<Maybe<SysContentFolder>>>;
   total?: Maybe<Scalars['Int']['output']>;
 };
@@ -2022,6 +2260,7 @@ export type VideoMediaOutput = {
   autocomplete?: Maybe<VideoMediaAutocomplete>;
   cursor?: Maybe<Scalars['String']['output']>;
   facets?: Maybe<VideoMediaFacet>;
+  item?: Maybe<VideoMedia>;
   items?: Maybe<Array<Maybe<VideoMedia>>>;
   total?: Maybe<Scalars['Int']['output']>;
 };
@@ -2087,6 +2326,7 @@ export type _ComponentOutput = {
   autocomplete?: Maybe<_ComponentAutocomplete>;
   cursor?: Maybe<Scalars['String']['output']>;
   facets?: Maybe<_ComponentFacet>;
+  item?: Maybe<_IComponent>;
   items?: Maybe<Array<Maybe<_IComponent>>>;
   total?: Maybe<Scalars['Int']['output']>;
 };
@@ -2152,6 +2392,7 @@ export type _ContentOutput = {
   autocomplete?: Maybe<_ContentAutocomplete>;
   cursor?: Maybe<Scalars['String']['output']>;
   facets?: Maybe<_ContentFacet>;
+  item?: Maybe<_IContent>;
   items?: Maybe<Array<Maybe<_IContent>>>;
   total?: Maybe<Scalars['Int']['output']>;
 };
@@ -2221,6 +2462,7 @@ export type _ExperienceOutput = {
   autocomplete?: Maybe<_ExperienceAutocomplete>;
   cursor?: Maybe<Scalars['String']['output']>;
   facets?: Maybe<_ExperienceFacet>;
+  item?: Maybe<_IExperience>;
   items?: Maybe<Array<Maybe<_IExperience>>>;
   total?: Maybe<Scalars['Int']['output']>;
 };
@@ -2287,6 +2529,7 @@ export type _FolderOutput = {
   autocomplete?: Maybe<_FolderAutocomplete>;
   cursor?: Maybe<Scalars['String']['output']>;
   facets?: Maybe<_FolderFacet>;
+  item?: Maybe<_IFolder>;
   items?: Maybe<Array<Maybe<_IFolder>>>;
   total?: Maybe<Scalars['Int']['output']>;
 };
@@ -2552,6 +2795,7 @@ export type _ImageOutput = {
   autocomplete?: Maybe<_ImageAutocomplete>;
   cursor?: Maybe<Scalars['String']['output']>;
   facets?: Maybe<_ImageFacet>;
+  item?: Maybe<_IImage>;
   items?: Maybe<Array<Maybe<_IImage>>>;
   total?: Maybe<Scalars['Int']['output']>;
 };
@@ -2617,6 +2861,7 @@ export type _MediaOutput = {
   autocomplete?: Maybe<_MediaAutocomplete>;
   cursor?: Maybe<Scalars['String']['output']>;
   facets?: Maybe<_MediaFacet>;
+  item?: Maybe<_IMedia>;
   items?: Maybe<Array<Maybe<_IMedia>>>;
   total?: Maybe<Scalars['Int']['output']>;
 };
@@ -2682,6 +2927,7 @@ export type _PageOutput = {
   autocomplete?: Maybe<_PageAutocomplete>;
   cursor?: Maybe<Scalars['String']['output']>;
   facets?: Maybe<_PageFacet>;
+  item?: Maybe<_IPage>;
   items?: Maybe<Array<Maybe<_IPage>>>;
   total?: Maybe<Scalars['Int']['output']>;
 };
@@ -2751,6 +2997,7 @@ export type _SectionOutput = {
   autocomplete?: Maybe<_SectionAutocomplete>;
   cursor?: Maybe<Scalars['String']['output']>;
   facets?: Maybe<_SectionFacet>;
+  item?: Maybe<_ISection>;
   items?: Maybe<Array<Maybe<_ISection>>>;
   total?: Maybe<Scalars['Int']['output']>;
 };
@@ -2817,6 +3064,7 @@ export type _VideoOutput = {
   autocomplete?: Maybe<_VideoAutocomplete>;
   cursor?: Maybe<Scalars['String']['output']>;
   facets?: Maybe<_VideoFacet>;
+  item?: Maybe<_IVideo>;
   items?: Maybe<Array<Maybe<_IVideo>>>;
   total?: Maybe<Scalars['Int']['output']>;
 };
@@ -2840,7 +3088,7 @@ export enum System_Locales {
   Neutral = 'NEUTRAL'
 }
 
-export type CompositionComponentNodeFragment = { __typename?: 'CompositionComponentNode', key?: string | null, component?: { __typename?: 'BlankSection', _metadata?: { __typename?: 'ContentMetadata', types?: Array<string | null> | null } | { __typename?: 'InstanceMetadata', types?: Array<string | null> | null } | { __typename?: 'ItemMetadata', types?: Array<string | null> | null } | { __typename?: 'MediaMetadata', types?: Array<string | null> | null } | null } | (
+export type CompositionComponentNodeFragment = { __typename?: 'CompositionComponentNode', key?: string | null, component?: { __typename?: 'BlankSection', _metadata?: { __typename?: 'ContentMetadata', types?: Array<string | null> | null } | { __typename?: 'InstanceMetadata', types?: Array<string | null> | null } | { __typename?: 'ItemMetadata', types?: Array<string | null> | null } | { __typename?: 'MediaMetadata', types?: Array<string | null> | null } | null } | { __typename?: 'PageSeoSettings', _metadata?: { __typename?: 'ContentMetadata', types?: Array<string | null> | null } | { __typename?: 'InstanceMetadata', types?: Array<string | null> | null } | { __typename?: 'ItemMetadata', types?: Array<string | null> | null } | { __typename?: 'MediaMetadata', types?: Array<string | null> | null } | null } | (
     { __typename?: 'ParagraphElement', _metadata?: { __typename?: 'ContentMetadata', types?: Array<string | null> | null } | { __typename?: 'InstanceMetadata', types?: Array<string | null> | null } | { __typename?: 'ItemMetadata', types?: Array<string | null> | null } | { __typename?: 'MediaMetadata', types?: Array<string | null> | null } | null }
     & { ' $fragmentRefs'?: { 'ParagraphElementFragment': ParagraphElementFragment } }
   ) | { __typename?: '_Component', _metadata?: { __typename?: 'ContentMetadata', types?: Array<string | null> | null } | { __typename?: 'InstanceMetadata', types?: Array<string | null> | null } | { __typename?: 'ItemMetadata', types?: Array<string | null> | null } | { __typename?: 'MediaMetadata', types?: Array<string | null> | null } | null } | { __typename?: '_Section', _metadata?: { __typename?: 'ContentMetadata', types?: Array<string | null> | null } | { __typename?: 'InstanceMetadata', types?: Array<string | null> | null } | { __typename?: 'ItemMetadata', types?: Array<string | null> | null } | { __typename?: 'MediaMetadata', types?: Array<string | null> | null } | null } | null } & { ' $fragmentName'?: 'CompositionComponentNodeFragment' };
